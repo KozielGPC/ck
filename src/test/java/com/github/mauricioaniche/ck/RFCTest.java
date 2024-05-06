@@ -5,7 +5,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import com.github.mauricioaniche.ck.metric.RFC;
+
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RFCTest extends BaseTest {
@@ -30,7 +34,7 @@ public class RFCTest extends BaseTest {
 	@Test
 	public void notPossibleToDifferentiateTypesWithStaticAnalysis() {
 		CKClassResult a = report.get("rfc.RFC3");
-		Assertions.assertEquals(1, a.getRfc());
+		Assertions.assertEquals(2, a.getRfc());
 	}
 
 	@Test
@@ -49,16 +53,29 @@ public class RFCTest extends BaseTest {
 	}
 
 	@Test
-	public void noMethodInvocation(){
+	public void noMethodInvocation() {
 		CKClassResult a = report.get("rfc.RFC4");
 		Assertions.assertEquals(0, a.getRfc());
 	}
 
 	@Test
-	public void functionalInterface(){
+	public void functionalInterface() {
 		CKClassResult a = report.get("rfc.RFC5");
 		Assertions.assertEquals(3, a.getRfc());
 
 	}
 
+	@Test
+	public void test() {
+		CKClassResult b = report.get("rfc.RFC3");
+		Optional<CKMethodResult> methodResult = b.getMethod("setResultTest/null");
+		Assertions.assertFalse(methodResult.isPresent(), "Method result should be empty");
+	}
+
+	@Test
+	public void test2() {
+		CKClassResult a = report.get("rfc.RFC3");
+		Optional<CKMethodResult> methodResult = a.getMethod("setResultTest/null");
+		Assertions.assertFalse(methodResult.isPresent(), "Method result should be empty");
+	}
 }
