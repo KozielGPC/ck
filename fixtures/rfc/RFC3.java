@@ -6,5 +6,9 @@ class RFC3 {
 		a("1");
 		a(1);
 	}
+
+	public void setResultTest(A a) {
+		setResult(a);
+	}
 	
 }
